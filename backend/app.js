@@ -9,6 +9,9 @@ const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/error.js");
 
 
+//import routes
+const authRoutes = require('./routes/authRoutes.js')
+
 
 //database connection
 mongoose.connect(process.env.MONGODB, {
@@ -20,6 +23,7 @@ mongoose.connect(process.env.MONGODB, {
 	.then(() => console.log("DB connected"))
   .catch((error) => console.log(error));
 
+
 //middleware
 app.use(morgan('dev'));
 app.use(bodyParser.json({limit: "5mb"}));
@@ -30,8 +34,14 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(cors());
 
+
+//routes middleware
+app.use('/api', authRoutes);
+
+
 //error middleware
 app.use(errorHandler);
+
 
 //port
 const port = process.env.PORT || 8080
