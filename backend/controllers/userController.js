@@ -31,7 +31,7 @@ exports.singleUser = async (req, res, next) => {
 		req.status(200).json({
 			success: true,
 			user
-		})
+		});
 		next();
 
 	} catch (error) {
@@ -46,7 +46,7 @@ exports.editUser = async (req, res, next) => {
 		req.status(200).json({
 			success: true,
 			user
-		})
+		});
 		next();
 
 	} catch (error) {
@@ -61,7 +61,41 @@ exports.deleteUser = async (req, res, next) => {
 		req.status(200).json({
 			success: true,
 			message: "user deleted"
-		})
+		});
+		next();
+
+	} catch (error) {
+		return next(error);
+	}
+}
+
+//jobs history
+exports.createUserJobsHistory = async (req, res, next) => {
+
+	const {title, description, salary, location} = req.body;
+
+	try {
+
+		const currentUser = await User.findOne({_id: req.user._id});
+
+		if(!currentUser){
+			return next(new ErrorResponse('you must log in', 401));
+		}else{
+			const addJobsHistory = {
+				title,
+				description,
+				salary,
+				location,
+				user: req.user._id
+			};
+			currentUser.jobsHistory.push(addJobsHistory);
+			await currentUser.save();
+		};
+
+		req.status(200).json({
+			success: true,
+			currentUser
+		});
 		next();
 
 	} catch (error) {
