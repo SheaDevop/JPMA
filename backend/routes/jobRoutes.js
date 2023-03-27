@@ -13,7 +13,7 @@ router.get('/job/:id', singleJob);
 // /api/job/update/job_id
 router.put('/job/update/:job_id', isAuthenticated, isAdmin, updateJob);
 // /api/job/show
-router.get('/job/show', showJobs);
+router.get('/jobs/show', showJobs);
 
 
 

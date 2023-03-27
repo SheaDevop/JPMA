@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { USER_LOAD_FAIL, USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOGOUT_FAIL, USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS } from '../constants/userConstant';
+import { ALL_USER_LOAD_FAIL, ALL_USER_LOAD_REQUEST, ALL_USER_LOAD_SUCCESS, USER_APPLY_JOB_FAIL, USER_APPLY_JOB_REQUEST, USER_APPLY_JOB_SUCCESS, USER_LOAD_FAIL, USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOGOUT_FAIL, USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS } from '../constants/userConstant';
 
 //signin action
 export const  userSignInAction = (user) => async (dispatch) => {
@@ -56,6 +56,44 @@ export const  userProfileAction = () => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: USER_LOAD_FAIL,
+			payload: error.response.data.error
+		});
+	}
+}
+
+
+//user job apply action
+export const  userApplyJobAction = (job) => async (dispatch) => {
+	dispatch({ type: USER_APPLY_JOB_REQUEST });
+	try {
+		const { data } = await axios.post('/api/user/jobhistory', job);
+		dispatch({
+			type: USER_APPLY_JOB_SUCCESS,
+			payload: data
+		});
+		toast.success("Applied Successfully!");
+	} catch (error) {
+		dispatch({
+			type: USER_APPLY_JOB_FAIL,
+			payload: error.response.data.error
+		});
+		toast.error(error.response.data.error);
+	}
+}
+
+
+//all users action
+export const  allUserAction = () => async (dispatch) => {
+	dispatch({ type: ALL_USER_LOAD_REQUEST });
+	try {
+		const { data } = await axios.get('/api/allusers');
+		dispatch({
+			type: ALL_USER_LOAD_SUCCESS,
+			payload: data
+		});
+	} catch (error) {
+		dispatch({
+			type: ALL_USER_LOAD_FAIL,
 			payload: error.response.data.error
 		});
 	}
