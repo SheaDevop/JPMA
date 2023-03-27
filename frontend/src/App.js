@@ -8,7 +8,6 @@ import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 import CssBaseline from '@mui/material/CssBaseline';
-import { theme } from './theme';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserRoute from './components/UserRoute';
@@ -21,6 +20,12 @@ import SingleJob from './pages/SingleJob';
 import DashUsers from './pages/admin/DashUsers';
 import DashJobs from './pages/admin/DashJobs';
 
+import { createTheme } from '@mui/material/styles';
+import { themeColors } from './theme';
+import { useSelector } from 'react-redux';
+import { useMemo } from 'react';
+
+
 
 //HOC
 const UserDashboardHOC = Layout(UserDashboard);
@@ -32,6 +37,10 @@ const DashJobsHOC = Layout(DashJobs);
 
 
 const App = () => {
+
+  const {mode} = useSelector(state => state.mode);
+  const theme = useMemo(() => createTheme(themeColors(mode)), [mode]);
+
   return (
     <>
       <ToastContainer/>

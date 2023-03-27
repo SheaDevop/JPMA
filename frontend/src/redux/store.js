@@ -4,6 +4,7 @@ import { composeWithDevTools } from '@redux-devtools/extension';
 import { loadJobReducer, loadJobSingleReducer } from './reducers/jobReducer';
 import { loadJobTypeReducer } from './reducers/jobTypeReducer';
 import { allUserReducer, userApplyJobReducer, userReducerLogOut, userReducerProfile, userReducerSignIn } from './reducers/userReducer';
+import { modeReducer } from './reducers/themeModeReducer';
 
 //combine reducers
 const reducer = combineReducers({
@@ -14,7 +15,8 @@ const reducer = combineReducers({
 	userProfile :userReducerProfile,
 	singleJob: loadJobSingleReducer,
 	userJobApplication: userApplyJobReducer,
-	allUsers: allUserReducer
+	allUsers: allUserReducer,
+	mode: modeReducer
 });
 
 
@@ -22,6 +24,9 @@ const reducer = combineReducers({
 let initialState = {
 	signIn: {
 		userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
+	},
+	mode: {
+		mode: "light"
 	}
 };
 const middleware = [thunk];
