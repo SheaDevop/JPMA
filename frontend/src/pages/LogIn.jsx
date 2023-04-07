@@ -36,7 +36,7 @@ const LogIn = () => {
                 navigate('/user/dashboard');
             }
         }
-    }, [isAuthenticated, navigate, userInfo.role])
+    }, [isAuthenticated])
 
     const formik = useFormik({
         initialValues: {

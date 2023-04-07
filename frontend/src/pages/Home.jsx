@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { jobLoadAction } from '../redux/actions/jobAction';
+import { jobTypeLoadAction } from '../redux/actions/jobTypeAction';
 import { Link, useParams } from 'react-router-dom';
 import CardElement from '../components/CardElement';
 import Footer from '../components/Footer';
@@ -23,7 +24,11 @@ const Home = () => {
 
 	useEffect(() => {
 		dispatch(jobLoadAction(page, keyword, cat, location))
-	},[page, keyword, cat, location, dispatch]);
+	},[page, keyword, cat, location]);
+
+	useEffect(() => {
+		dispatch(jobTypeLoadAction());
+	}, []);
 
 	const handleChangeCategory = (e) => {
 		setCat(e.target.value);
@@ -113,4 +118,4 @@ const Home = () => {
 	)
 }
 
-export default Home
+export default Home;

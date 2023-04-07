@@ -13,7 +13,7 @@ const DashUsers = () => {
 
     useEffect(() => {
         dispatch(allUserAction());
-    }, [dispatch]);
+    }, []);
 
 
     const { users } = useSelector(state => state.allUsers);

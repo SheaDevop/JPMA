@@ -18,7 +18,7 @@ const SingleJob = () => {
     const { id } = useParams();
     useEffect(() => {
         dispatch(jobLoadSingleAction(id));
-    }, [id, dispatch]);
+    }, [id]);
 
     const applyForAJob = () => {
         dispatch(userApplyJobAction({
